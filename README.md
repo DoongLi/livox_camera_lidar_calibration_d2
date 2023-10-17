@@ -40,6 +40,6 @@ Note: You need to put livox_ros_driver2 and livox_camera_lidar_calibration_d2 un
 
 - Since the original rosbag file and pcd file are too large, I did not upload them, you can see how they look in the picture below：
 
-![1](/home/doongli/Github-Workspace/DoongLi/livox_camera_lidar_calibration_d2/IMG/1.png)
+![1](IMG/1.png)
 
-![2](/home/doongli/Github-Workspace/DoongLi/livox_camera_lidar_calibration_d2/IMG/2.png)
+![2](IMG/2.png)
