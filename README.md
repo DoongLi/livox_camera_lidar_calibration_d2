@@ -37,3 +37,9 @@ Note: You need to put livox_ros_driver2 and livox_camera_lidar_calibration_d2 un
 - Data collection：The distance is 4-5m, 10-20 different distances and angles, including left and right positions, so that the calibration plate appears at various positions in the image, and the four corners of the calibration object must be visible in both the image and the point cloud. 10s rosbag (including points clouds and images), collected from **/camera/color/image_raw** (original image)
 
 - About camera internal parameters: Realsense cameras can directly read internal parameters and do not require additional calibration.
+
+- Since the original rosbag file and pcd file are too large, I did not upload them, you can see how they look in the picture below：
+
+![1](/home/doongli/Github-Workspace/DoongLi/livox_camera_lidar_calibration_d2/IMG/1.png)
+
+![2](/home/doongli/Github-Workspace/DoongLi/livox_camera_lidar_calibration_d2/IMG/2.png)
