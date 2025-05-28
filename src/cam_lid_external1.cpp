@@ -1,6 +1,5 @@
 #include <ros/ros.h>
 #include <iostream>
-#include <ceres/ceres.h>
 #include <Eigen/Core>
 #include <fstream>
 #include <pcl/point_cloud.h>
@@ -12,6 +11,7 @@
 
 #include "common.h"
 #include "result_verify.h"
+#include "type.h"
 
 using namespace std;
 
@@ -120,7 +120,7 @@ int main(int argc, char **argv) {
     Eigen::Map<Eigen::Quaterniond> m_q = Eigen::Map<Eigen::Quaterniond>(ext);
     Eigen::Map<Eigen::Vector3d> m_t = Eigen::Map<Eigen::Vector3d>(ext + 4);
 
-    ceres::LocalParameterization * q_parameterization = new ceres::EigenQuaternionParameterization();
+    ParameterizationPtr q_parameterization = new ParameterizationType();
     ceres::Problem problem;
 
     problem.AddParameterBlock(ext, 4, q_parameterization);

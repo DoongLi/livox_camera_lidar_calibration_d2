@@ -21,8 +21,7 @@ catkin_make
 source devel/setup.bash
 ```
 
-Note: You need to put livox_ros_driver2 and livox_camera_lidar_calibration_d2 under the same src. 
-
+Note: You need to put livox_ros_driver2 and livox_camera_lidar_calibration_d2 under the same src. If you are still using livox_ros_driver, you should modify the `msg_type` to `livox_ros_driver/CustomMsg` in `config/params.yaml`.
 ## 3.Calibrating camera and lidar external parameters
 
 ## 4.Verify and use external parameters

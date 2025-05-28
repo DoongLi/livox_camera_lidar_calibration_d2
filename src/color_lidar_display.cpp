@@ -5,7 +5,6 @@
 
 #include <stdio.h>
 #include <cmath>
-#include <hash_map>
 #include <ctime>
 
 #include <nav_msgs/Odometry.h>
@@ -31,26 +30,26 @@ void loadPointcloudFromROSBag(const string& bag_path);
 typedef pcl::PointXYZRGB PointType;
 vector<livox_ros_driver::CustomMsg> lidar_datas; 
 int threshold_lidar;
-string input_photo_path, input_bag_path, intrinsic_path, extrinsic_path;
+string input_photo_path, input_bag_path, intrinsic_path, extrinsic_path, msg_type;
 
 void loadPointcloudFromROSBag(const string& bag_path) {
     ROS_INFO("Start to load the rosbag %s", bag_path.c_str());
     rosbag::Bag bag;
     try {
         bag.open(bag_path, rosbag::bagmode::Read);
-    } catch (rosbag::BagException e) {
+    } catch (const rosbag::BagException& e) {
         ROS_ERROR_STREAM("LOADING BAG FAILED: " << e.what());
         return;
     }
 
     vector<string> types;
-    types.push_back(string("livox_ros_driver/CustomMsg"));  // message title
+    types.push_back(msg_type);  // message title
     rosbag::View view(bag, rosbag::TypeQuery(types));
 
     for (const rosbag::MessageInstance& m : view) {
         livox_ros_driver::CustomMsg livoxCloud = *(m.instantiate<livox_ros_driver::CustomMsg>()); // message type
         lidar_datas.push_back(livoxCloud);
-        if (lidar_datas.size() > threshold_lidar) {
+        if (lidar_datas.size() > static_cast<size_t>(threshold_lidar)) {
             break;
         }
     }
@@ -108,7 +107,11 @@ void getParameters() {
         exit(1);
     }
     if (!ros::param::get("extrinsic_path", extrinsic_path)) {
-        cout << "Can not get the value o以下程序节点中如果想修改launch文件，需要到src/calibration/launch文件夹中找对应的launch文件。f extrinsic_path" << endl;
+        cout << "Can not get the value of extrinsic_path" << endl;
+        exit(1);
+    }
+    if (!ros::param::get("msg_type", msg_type)) {
+        cout << "Can not get the value of msg_type" << endl;
         exit(1);
     }
 }

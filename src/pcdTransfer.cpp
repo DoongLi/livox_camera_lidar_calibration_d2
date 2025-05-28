@@ -22,7 +22,7 @@ struct pointData{
 };
 vector<pointData> vector_data;
 livox_ros_driver::CustomMsg livox_cloud;
-string input_bag_path, output_path;
+string input_bag_path, output_path, msg_type;
 int threshold_lidar, data_num;
 
 void loadAndSavePointcloud(int index);
@@ -42,13 +42,13 @@ void loadAndSavePointcloud(int index) {
     rosbag::Bag bag;
     try {
         bag.open(path, rosbag::bagmode::Read);
-    } catch (rosbag::BagException e) {
+    } catch (const rosbag::BagException& e) {
         ROS_ERROR_STREAM("LOADING BAG FAILED: " << e.what());
         return;
     }
 
     vector<string> types;
-    types.push_back(string("livox_ros_driver2/CustomMsg")); 
+    types.push_back(msg_type);
     rosbag::View view(bag, rosbag::TypeQuery(types));
 
     int cloudCount = 0;
@@ -126,6 +126,10 @@ void getParameters() {
     }
     if (!ros::param::get("output_pcd_path", output_path)) {
         cout << "Can not get the value of output_path" << endl;
+        exit(1);
+    }
+    if (!ros::param::get("msg_type", msg_type)) {
+        cout << "Can not get the value of msg_type" << endl;
         exit(1);
     }
     if (!ros::param::get("threshold_lidar", threshold_lidar)) {

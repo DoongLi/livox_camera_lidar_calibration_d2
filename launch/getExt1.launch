@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-  
+
     <rosparam param="init_value">  [0.0, -1.0, 0.0, 0.0,
                                     0.0, 0.0, -1.0, 0.0,
                                     1.0, 0.0, 0.0,  0.0] </rosparam>  <!-- init value of roatation matrix(3*3 on the left) and the translation(3*1 vector on the right) -->
@@ -14,4 +14,3 @@
     <node pkg="camera_lidar_calibration" name="getExt1" type="getExt1" output="screen"></node>
 
 </launch>
-

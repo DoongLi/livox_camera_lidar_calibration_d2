@@ -30,26 +30,26 @@ cv::Mat src_img;
 
 vector<livox_ros_driver::CustomMsg> lidar_datas; 
 int threshold_lidar;  // number of cloud point on the photo
-string input_bag_path, input_photo_path, output_path, intrinsic_path, extrinsic_path;
+string input_bag_path, input_photo_path, output_path, intrinsic_path, extrinsic_path, msg_type;
 
 void loadPointcloudFromROSBag(const string& bag_path) {
     ROS_INFO("Start to load the rosbag %s", bag_path.c_str());
     rosbag::Bag bag;
     try {
         bag.open(bag_path, rosbag::bagmode::Read);
-    } catch (rosbag::BagException e) {
+    } catch (const rosbag::BagException& e) {
         ROS_ERROR_STREAM("LOADING BAG FAILED: " << e.what());
         return;
     }
 
     vector<string> types;
-    types.push_back(string("livox_ros_driver/CustomMsg"));  // message title
+    types.push_back(msg_type);  // message title
     rosbag::View view(bag, rosbag::TypeQuery(types));
 
     for (const rosbag::MessageInstance& m : view) {
         livox_ros_driver::CustomMsg livoxCloud = *(m.instantiate<livox_ros_driver::CustomMsg>()); // message type
         lidar_datas.push_back(livoxCloud);
-        if (lidar_datas.size() > (threshold_lidar/24000 + 1)) {
+        if (lidar_datas.size() > static_cast<size_t>(threshold_lidar/24000 + 1)) {
             break;
         }
     }
@@ -121,6 +121,10 @@ void getParameters() {
     }
     if (!ros::param::get("extrinsic_path", extrinsic_path)) {
         cout << "Can not get the value of extrinsic_path" << endl;
+        exit(1);
+    }
+    if (!ros::param::get("msg_type", msg_type)) {
+        cout << "Can not get the value of msg_type" << endl;
         exit(1);
     }
 }

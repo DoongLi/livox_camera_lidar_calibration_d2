@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-  
+    <rosparam command="load" file="$(find camera_lidar_calibration)/config/params.yaml" />
+
     <param name="intrinsic_path"        value="$(find camera_lidar_calibration)/../../data/parameters/intrinsic.txt" />  <!-- intrinsic file -->
     <param name="extrinsic_path"        value="$(find camera_lidar_calibration)/../../data/parameters/extrinsic.txt" />  <!-- extrinsic file -->
-    
+
     <param name="input_bag_path"        value="$(find camera_lidar_calibration)/../../data/lidar/0.bag" />  <!-- rosbag file -->
     <param name="input_photo_path"      value="$(find camera_lidar_calibration)/../../data/photo/0.bmp" />  <!-- photo file -->
     <param name="output_path"           value="$(find camera_lidar_calibration)/../../data/projection/new.bmp" />  <!-- path to save new photo file -->
@@ -13,4 +14,3 @@
     <node pkg="camera_lidar_calibration" name="projectCloud" type="projectCloud" output="screen"></node>
 
 </launch>
-
